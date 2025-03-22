@@ -22,6 +22,9 @@ public class Product {
     private String category;
     private String description;
 
+    @Version  // Hibernate will use this field to detect concurrent modifications
+    private Integer version  = 0 ;
+
     public String getImage() {
         return image;
     }
@@ -71,4 +74,5 @@ public class Product {
     public String getTitle() {
         return title;
     }
+
 }

@@ -1,5 +1,7 @@
 package scalerproject.service;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import scalerproject.entity.Product;
@@ -45,17 +47,15 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    @Transactional
     public Product updateProduct(Long id, Product updatedProduct) {
-        return productRepository.findById(id)
-                .map(existingProduct -> {
-                    existingProduct.setTitle(updatedProduct.getTitle());
-                    existingProduct.setPrice(updatedProduct.getPrice());
-                    existingProduct.setCategory(updatedProduct.getCategory());
-                    existingProduct.setDescription(updatedProduct.getDescription());
-                    existingProduct.setImage(updatedProduct.getImage());
-                    return productRepository.save(existingProduct);
-                })
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+
+        existingProduct.setTitle(updatedProduct.getTitle());
+        existingProduct.setPrice(updatedProduct.getPrice());
+
+        return productRepository.save(existingProduct);  // Saves the managed entity
     }
 
     public void deleteProduct(Long id) {

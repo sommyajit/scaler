@@ -1,4 +1,3 @@
-# scaler
 This project implements JWT-based authentication in a Spring Boot application using Spring Security.
 
 🚀 Features
@@ -57,14 +56,14 @@ mvn spring-boot:run
 Send a POST request to /auth/login with a username and password.
 
 {
-  "username": "admin",
-  "password": "password"
+"username": "admin",
+"password": "password"
 }
 
 ✅ Response:
 
 {
-  "token": "your-jwt-token-here"
+"token": "your-jwt-token-here"
 }
 
 2️⃣ Access Secured API
